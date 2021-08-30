@@ -12,6 +12,9 @@ namespace Postbellum
 		private readonly Dictionary<string, GridItem> tiles;
 		public Camera camera;
 		public Player FocusedPlayer;
+		public List<UI> UIs = new List<UI>();
+		public SpriteFont GameFont;
+		public int global_index = 0;
 		public GameGrid(Camera cam, Dictionary<string, GridItem> arr, Player p)
 		{
 			gmap = new Dictionary<Vector2, Chunk>();
@@ -110,7 +113,7 @@ namespace Postbellum
 			return target;
 		}
 
-		public void Render(SpriteBatch sb)
+		public void Render(SpriteBatch sb, GraphicsDeviceManager gdm)
 		{
 			int w = FocusedPlayer.EntityTexture.Width;
 			int h = FocusedPlayer.EntityTexture.Height;
@@ -120,6 +123,10 @@ namespace Postbellum
 			}
 			sb.Draw(FocusedPlayer.EntityTexture, new Vector2(FocusedPlayer.CurrentChunk.ChunkPosition.X + FocusedPlayer.Position.X * w * GridItem.TextureScalar, FocusedPlayer.CurrentChunk.ChunkPosition.Y + FocusedPlayer.Position.Y * h * GridItem.TextureScalar) + camera.Position,
 						null, Color.White, 0f, new Vector2(0, 0), GridItem.TextureScalar, SpriteEffects.None, 1f);
+			foreach(UI ui in UIs)
+			{
+				ui.Render(sb, this, gdm);
+			}
 		}
 
 		

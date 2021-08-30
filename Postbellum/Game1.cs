@@ -69,6 +69,8 @@ namespace Postbellum
 				tiles, 
 				main_player);
 			gg.AddChunk(test_chunk);
+			gg.GameFont = defaultfont;
+			gg.UIs.Add(UI.MenuUI);
 
 			// TODO: use this.Content to load your game content here
 		}
@@ -131,7 +133,7 @@ namespace Postbellum
 			//gg.camera.Position = -gg.FocusedPlayer.Position * 32;// * gg.FocusedPlayer.CurrentChunk.ChunkPosition;
 
 			_spriteBatch.Begin();
-			gg.Render(_spriteBatch);
+			gg.Render(_spriteBatch, _graphics);
 
 			if (Debug)
 			{

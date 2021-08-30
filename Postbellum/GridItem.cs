@@ -11,6 +11,8 @@ namespace Postbellum
 		public const float TextureScalar = 1.5f;
 		public bool Collision = false;
 
+		public int GlobalUIIndex = 0;
+
 		public GridItem(Texture2D texture, string name)
 		{
 			GridPosition = Vector2.One;
