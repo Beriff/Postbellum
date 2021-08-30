@@ -84,25 +84,21 @@ namespace Postbellum
 				lastaction = Actions.MoveRight;
 				gg.ReceiveAction(Actions.MoveRight);
 				keypresses[Keys.D] = false;
-				gg.camera.Position.X -= 24;
 			} else if (Keyboard.GetState().IsKeyDown(Keys.A) && keypresses[Keys.A])
 			{
 				lastaction = Actions.MoveLeft;
 				gg.ReceiveAction(Actions.MoveLeft);
 				keypresses[Keys.A] = false;
-				gg.camera.Position.X += 24;
 			} else if (Keyboard.GetState().IsKeyDown(Keys.W) && keypresses[Keys.W])
 			{
 				lastaction = Actions.MoveUp;
 				gg.ReceiveAction(Actions.MoveUp);
 				keypresses[Keys.W] = false;
-				gg.camera.Position.Y += 24;
 			} else if (Keyboard.GetState().IsKeyDown(Keys.S) && keypresses[Keys.S])
 			{
 				lastaction = Actions.MoveDown;
 				gg.ReceiveAction(Actions.MoveDown);
 				keypresses[Keys.S] = false;
-				gg.camera.Position.Y -= 24;
 			}
 
 			if (Keyboard.GetState().IsKeyUp(Keys.D))

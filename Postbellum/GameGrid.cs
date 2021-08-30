@@ -69,7 +69,24 @@ namespace Postbellum
 			if ((FocusedPlayer.CurrentChunk.IsEntityAt(presm_pos) && FocusedPlayer.CurrentChunk.GetEntityAt(presm_pos).Collision) || FocusedPlayer.CurrentChunk.GetAt(presm_pos).Collision)
 			{
 				MoveFocused(-move);
+
 				return;
+			}
+
+			if (((int)pos.X) == 1)
+			{
+				camera.Position.X -= 24;
+			} else if (((int)pos.X) == -1)
+			{
+				camera.Position.X += 24;
+			}
+
+			if (((int)pos.Y) == 1)
+			{
+				camera.Position.Y -= 24;
+			} else if (((int)pos.Y) == -1)
+			{
+				camera.Position.Y += 24;
 			}
 			FocusedPlayer.Position = presm_pos;
 		}
