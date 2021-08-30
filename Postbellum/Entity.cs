@@ -14,7 +14,8 @@ namespace Postbellum
 		public Vector2 Position = new Vector2(1, 1);
 		public Vector2 BoundingBox = new Vector2(16, 16);
 		public Vector2 Offset = new Vector2(0, 0);
-		public delegate void Tick(GameTime gt);
+		public virtual void Tick(GameTime gt) { }
+
 		public bool Collision = true;
 
 		public Entity(Texture2D texture, int hp, Vector2 position)

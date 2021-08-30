@@ -95,6 +95,11 @@ namespace Postbellum
 			gmap[c.ChunkPosition] = c;
 		}
 
+		public void RenderUI(SpriteBatch sb)
+		{
+			//sb.Draw();
+		}
+
 		public Chunk GenerateChunk(ChunkTypes type, Vector2 chunk_position)
 		{
 			Chunk target = new Chunk(chunk_position);

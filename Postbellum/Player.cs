@@ -24,9 +24,12 @@ namespace Postbellum
 
 		public Dictionary<Actions, Texture2D> States = new Dictionary<Actions, Texture2D>();
 		public Chunk CurrentChunk;
+		public int Hunger;
+		public bool decrease_lock = true;
 		public Player(Texture2D texture_front, Texture2D texture_side, Texture2D texture_back, Vector2 position, Chunk c) : base(texture_front, 100, position)
 		{
 			CurrentChunk = c;
+			Hunger = 100;
 		}
 
 		public void StateUpdate(Actions action)
@@ -67,6 +70,15 @@ namespace Postbellum
 			}
 
 			return IsDead();
+		}
+
+		public override void Tick(GameTime gt)
+		{
+			double time = Math.Round(gt.TotalGameTime.TotalMinutes, 5);
+			if (time != 0 && time % 1 == 0 && decrease_lock)
+			{
+				Hunger--;
+			}
 		}
 	}
 }
