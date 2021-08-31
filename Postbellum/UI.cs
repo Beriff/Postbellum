@@ -9,10 +9,13 @@ namespace Postbellum
 	class UI
 	{
 		public Action<SpriteBatch, GameGrid, GraphicsDeviceManager> Render;
+		public Action<Actions, GameGrid> PassAction;
+		public bool Active = true;
 
-		public UI(Action<SpriteBatch, GameGrid, GraphicsDeviceManager> render)
+		public UI(Action<SpriteBatch, GameGrid, GraphicsDeviceManager> render, Action<Actions, GameGrid> pass)
 		{
 			Render = render;
+			PassAction = pass;
 		}
 
 		public static UI MenuUI = new UI((SpriteBatch sb, GameGrid gg, GraphicsDeviceManager gdm) => {
@@ -32,6 +35,33 @@ namespace Postbellum
 			{
 				string sel = gg.global_index == i ? ">>" : "";
 				sb.DrawString(gg.GameFont, sel + selections[i], new Vector2(half_w / 2, half_h / 2 + (i+2)*15), Color.White);
+			}
+		}, (Actions a, GameGrid gg) => { 
+			if (a == Actions.MoveDown)
+			{
+				if (gg.global_index + 1 >= 2)
+				{
+					gg.global_index = 0;
+				} else
+				{
+					gg.global_index++;
+				}
+			} else if (a == Actions.MoveUp)
+			{
+				if (gg.global_index - 1 < 0)
+				{
+					gg.global_index = 1;
+				}
+				else
+				{
+					gg.global_index--;
+				}
+			} else if (a == Actions.Enter)
+			{
+				if (gg.global_index == 1)
+				{
+					gg.QueueExit = true;
+				}
 			}
 		});
 	}

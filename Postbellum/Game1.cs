@@ -37,6 +37,7 @@ namespace Postbellum
 			keypresses[Keys.A] = true;
 			keypresses[Keys.W] = true;
 			keypresses[Keys.S] = true;
+			keypresses[Keys.Enter] = true;
 			base.Initialize();
 		}
 
@@ -70,14 +71,14 @@ namespace Postbellum
 				main_player);
 			gg.AddChunk(test_chunk);
 			gg.GameFont = defaultfont;
-			gg.UIs.Add(UI.MenuUI);
+			gg.ActiveUI = UI.MenuUI;
 
 			// TODO: use this.Content to load your game content here
 		}
 
 		protected override void Update(GameTime gameTime)
 		{
-			if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+			if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape) || gg.QueueExit)
 				Exit();
 
 			gg.FocusedPlayer.Tick(gameTime);
@@ -104,6 +105,12 @@ namespace Postbellum
 				gg.ReceiveAction(Actions.MoveDown);
 				keypresses[Keys.S] = false;
 			}
+			else if (Keyboard.GetState().IsKeyDown(Keys.Enter) && keypresses[Keys.Enter])
+			{
+				lastaction = Actions.MoveDown;
+				gg.ReceiveAction(Actions.Enter);
+				keypresses[Keys.Enter] = false;
+			}
 
 			if (Keyboard.GetState().IsKeyUp(Keys.D))
 			{
@@ -120,6 +127,10 @@ namespace Postbellum
 			if (Keyboard.GetState().IsKeyUp(Keys.W))
 			{
 				keypresses[Keys.W] = true;
+			}
+			if (Keyboard.GetState().IsKeyUp(Keys.Enter))
+			{
+				keypresses[Keys.Enter] = true;
 			}
 
 			base.Update(gameTime);
