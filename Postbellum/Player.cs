@@ -13,7 +13,8 @@ namespace Postbellum
 		MoveUp,
 		MoveLeft,
 		Idle,
-		Enter
+		Enter,
+		Escape
 	}
 	class Player : Entity
 	{

@@ -28,18 +28,19 @@ namespace Postbellum
 			rect.SetData(data);
 
 			sb.Draw(rect, new Vector2(half_w / 2, half_h / 2), Color.Black);
-			sb.DrawString(gg.GameFont, "Game Menu", new Vector2(half_w / 2, half_h / 2), Color.White);
+			sb.DrawString(gg.GameFont, "Game Menu", new Vector2(half_w - gg.GameFont.MeasureString("Game Menu").X / 2, half_h / 2), Color.White);
 
-			string[] selections = new string[] { "Options", "Exit" };
+			string[] selections = new string[] { "  | Return", "  | Options", "  | Exit" };
 			for(int i = 0; i < selections.Length; i++)
 			{
-				string sel = gg.global_index == i ? ">>" : "";
-				sb.DrawString(gg.GameFont, sel + selections[i], new Vector2(half_w / 2, half_h / 2 + (i+2)*15), Color.White);
+				sb.DrawString(gg.GameFont, selections[i], new Vector2(half_w / 2 + gg.GameFont.MeasureString(">>").X, half_h / 2 + (i+2)*15), Color.White);
+				if (i == gg.global_index)
+					sb.DrawString(gg.GameFont, ">>", new Vector2(half_w / 2, half_h / 2 + (i + 2) * 15), Color.Yellow);
 			}
 		}, (Actions a, GameGrid gg) => { 
 			if (a == Actions.MoveDown)
 			{
-				if (gg.global_index + 1 >= 2)
+				if (gg.global_index + 1 >= 3)
 				{
 					gg.global_index = 0;
 				} else
@@ -50,7 +51,7 @@ namespace Postbellum
 			{
 				if (gg.global_index - 1 < 0)
 				{
-					gg.global_index = 1;
+					gg.global_index = 2;
 				}
 				else
 				{
@@ -58,10 +59,18 @@ namespace Postbellum
 				}
 			} else if (a == Actions.Enter)
 			{
-				if (gg.global_index == 1)
+				if (gg.global_index == 2)
 				{
 					gg.QueueExit = true;
+				} else if (gg.global_index == 0)
+				{
+					gg.ActiveUI.Active = false;
+					gg.IsActiveUI = false;
 				}
+			} else if (a == Actions.Escape)
+			{
+				gg.ActiveUI.Active = false;
+				gg.IsActiveUI = false;
 			}
 		});
 	}

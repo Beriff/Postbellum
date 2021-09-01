@@ -15,7 +15,7 @@ namespace Postbellum
 		public UI ActiveUI;
 		public SpriteFont GameFont;
 		public int global_index = 0;
-		private bool IsActiveUI = true;
+		public bool IsActiveUI = true;
 		public bool QueueExit = false;
 		public GameGrid(Camera cam, Dictionary<string, GridItem> arr, Player p)
 		{
@@ -54,6 +54,19 @@ namespace Postbellum
 					if (IsActiveUI)
 					{
 						ActiveUI.PassAction(Actions.Enter, this);
+						break;
+					}
+					break;
+				case Actions.Escape:
+					if (IsActiveUI)
+					{
+						ActiveUI.PassAction(Actions.Escape, this);
+						break;
+					} else
+					{
+						IsActiveUI = true;
+						UI.MenuUI.Active = true;
+						ActiveUI = UI.MenuUI;
 						break;
 					}
 					break;
@@ -142,7 +155,7 @@ namespace Postbellum
 			}
 			sb.Draw(FocusedPlayer.EntityTexture, new Vector2(FocusedPlayer.CurrentChunk.ChunkPosition.X + FocusedPlayer.Position.X * w * GridItem.TextureScalar, FocusedPlayer.CurrentChunk.ChunkPosition.Y + FocusedPlayer.Position.Y * h * GridItem.TextureScalar) + camera.Position,
 						null, Color.White, 0f, new Vector2(0, 0), GridItem.TextureScalar, SpriteEffects.None, 1f);
-			if (ActiveUI.Active)
+			if (ActiveUI.Active && IsActiveUI)
 			{
 				ActiveUI.Render(sb, this, gdm);
 			}
