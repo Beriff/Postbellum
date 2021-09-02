@@ -18,6 +18,8 @@ namespace Postbellum
 		bool Debug;
 		Actions lastaction;
 		Dictionary<Keys, bool> keypresses = new Dictionary<Keys, bool>();
+		static public uint volume = 50;
+		static public bool autosave = true;
 		public static int TileToPixels(int tiles) // TODO: make function inline
 		{
 			return tiles * DefTextureSize;
@@ -81,8 +83,6 @@ namespace Postbellum
 		{
 			if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || gg.QueueExit)
 				Exit();
-
-			gg.FocusedPlayer.Tick(gameTime);
 
 			// TODO: Add your update logic here
 			if (Keyboard.GetState().IsKeyDown(Keys.D) && keypresses[Keys.D])
@@ -152,7 +152,6 @@ namespace Postbellum
 			GraphicsDevice.Clear(Color.Black);
 
 			// TODO: Add your drawing code here
-			//gg.camera.Position = -gg.FocusedPlayer.Position * 32;// * gg.FocusedPlayer.CurrentChunk.ChunkPosition;
 
 			_spriteBatch.Begin();
 			gg.Render(_spriteBatch, _graphics);

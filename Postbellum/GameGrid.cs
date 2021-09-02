@@ -45,10 +45,27 @@ namespace Postbellum
 					MoveFocused(new Vector2(0, -1));
 					break;
 				case Actions.MoveLeft:
-					MoveFocused(new Vector2(-1, 0));
+					if (IsActiveUI)
+					{
+						ActiveUI.PassAction(Actions.MoveLeft, this);
+						break;
+					} 
+					else
+					{
+						MoveFocused(new Vector2(-1, 0));
+					}
+					
 					break;
 				case Actions.MoveRight:
-					MoveFocused(new Vector2(1, 0));
+					if (IsActiveUI)
+					{
+						ActiveUI.PassAction(Actions.MoveRight, this);
+						break;
+					}
+					else
+					{
+						MoveFocused(new Vector2(1, 0));
+					}
 					break;
 				case Actions.Enter:
 					if (IsActiveUI)
