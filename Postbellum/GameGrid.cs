@@ -147,9 +147,21 @@ namespace Postbellum
 			gmap[c.ChunkPosition] = c;
 		}
 
-		public void RenderUI(SpriteBatch sb)
+		public GridItem GetAtGlobalCoords(int x, int y)
 		{
-			//sb.Draw();
+			Vector2 chunk_coords = new Vector2(
+				(float)Math.Floor((double)(x / Chunk.ChunkSizeX)), 
+				(float)Math.Floor((double)(y / Chunk.ChunkSizeY))
+				);
+
+			Vector2 local_coords = new Vector2(x % Chunk.ChunkSizeX, y % Chunk.ChunkSizeY);
+
+			return gmap[chunk_coords].GetAt(local_coords);
+		}
+
+		public GridItem GetAtGlobalCoords(Vector2 vec)
+		{
+			return GetAtGlobalCoords((int)vec.X, (int)vec.Y);
 		}
 
 		public Chunk GenerateChunk(ChunkTypes type, Vector2 chunk_position)

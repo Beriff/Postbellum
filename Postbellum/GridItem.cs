@@ -10,6 +10,7 @@ namespace Postbellum
 		public Vector2 GridPosition { get; set; }
 		public const float TextureScalar = 1.5f;
 		public bool Collision = false;
+		public bool IsVisible = true;
 
 		public int GlobalUIIndex = 0;
 
