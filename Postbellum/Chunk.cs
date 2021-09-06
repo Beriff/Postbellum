@@ -30,7 +30,7 @@ namespace Postbellum
 		}
 		public GridItem GetAt(Vector2 pos)
 		{
-			if ((pos.X >= 0 && pos.X <= ChunkSizeX) && (pos.Y >= 0 && pos.Y <= ChunkSizeY))
+			if ((pos.X >= 0 && pos.X <= ChunkSizeX-1) && (pos.Y >= 0 && pos.Y <= ChunkSizeY-1))
 				return grid[(int)pos.X, (int)pos.Y];
 			throw new Exception("Position out of range: " + pos.ToString());
 		}
@@ -43,7 +43,7 @@ namespace Postbellum
 					Texture2D texture = grid[x, y].ItemTexture;
 					int w = texture.Width;
 					int h = texture.Height;
-					sb.Draw(texture, new Vector2(ChunkPosition.X + x*w*GridItem.TextureScalar, ChunkPosition.Y + y*h*GridItem.TextureScalar) + offset, 
+					sb.Draw(texture, new Vector2(ChunkPosition.X*32 + x*w*GridItem.TextureScalar, ChunkPosition.Y*32 + y*h*GridItem.TextureScalar) + offset, 
 						null, Color.White, 0f, new Vector2(0,0), GridItem.TextureScalar, SpriteEffects.None, 0f);
 				}
 			}

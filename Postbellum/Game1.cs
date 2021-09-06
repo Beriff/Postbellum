@@ -9,10 +9,10 @@ namespace Postbellum
 	public class PostbellumGame : Game
 	{
 		public const int DefTextureSize = 16;
-		public const string GameVersion = "v0.3.0a";
+		public const string GameVersion = "v0.4.3a infinite terrain test";
 		private GraphicsDeviceManager _graphics;
 		private SpriteBatch _spriteBatch;
-		Chunk test_chunk = new Chunk(new Vector2(-50, -50));
+		Chunk test_chunk = new Chunk(new Vector2(0, 0));
 		GameGrid gg;
 		SpriteFont defaultfont;
 		bool Debug;
@@ -159,9 +159,8 @@ namespace Postbellum
 			if (Debug)
 			{
 				_spriteBatch.DrawString(defaultfont, string.Format("Build {0}", GameVersion), Vector2.One, Color.White);
-				_spriteBatch.DrawString(defaultfont, gg.camera.ToString(), new Vector2(0, 15), Color.White);
+				_spriteBatch.DrawString(defaultfont, "Chunk Pos " + gg.FocusedPlayer.CurrentChunk.ChunkPosition.ToString() + " Player Pos " + gg.FocusedPlayer.Position.ToString(), new Vector2(0, 15), Color.White);
 				_spriteBatch.DrawString(defaultfont, string.Format("FPS {0}", Math.Round((1 / gameTime.ElapsedGameTime.TotalSeconds))), new Vector2(0, 30), Color.White);
-				_spriteBatch.DrawString(defaultfont, string.Format("Hunger {0} {1}", gg.FocusedPlayer.Hunger, Math.Round(gameTime.TotalGameTime.TotalMinutes, 5)), new Vector2(0, 45), Color.White);
 			}
 				
 			_spriteBatch.End();

@@ -94,29 +94,32 @@ namespace Postbellum
 			Vector2 presm_pos = FocusedPlayer.Position + pos;
 			Vector2 move = Vector2.Zero;
 
-			if (presm_pos.X > Chunk.ChunkSizeX)
+			if (presm_pos.X > Chunk.ChunkSizeX - 1)
 			{	
 				presm_pos.X = 0;
 				FocusedPlayer.CurrentChunk.ChunkPosition += new Vector2(1, 0);
 				move += new Vector2(1, 0);
 			} else if (presm_pos.X < 0)
 			{
-				presm_pos.X = Chunk.ChunkSizeX;
+				presm_pos.X = Chunk.ChunkSizeX - 1;
 				FocusedPlayer.CurrentChunk.ChunkPosition -= new Vector2(1, 0);
 				move -= new Vector2(1, 0);
 			}
 
-			if (presm_pos.Y > Chunk.ChunkSizeY)
+			if (presm_pos.Y > Chunk.ChunkSizeY - 1)
 			{
 				presm_pos.Y = 0;
 				FocusedPlayer.CurrentChunk.ChunkPosition -= new Vector2(0, 1);
 				move -= new Vector2(0, 1);
 			} else if (presm_pos.Y < 0)
 			{
-				presm_pos.Y = Chunk.ChunkSizeY;
+				presm_pos.Y = Chunk.ChunkSizeY - 1;
 				FocusedPlayer.CurrentChunk.ChunkPosition += new Vector2(0, 1);
 				move += new Vector2(0, 1);
 			}
+
+			FocusedPlayer.Position = presm_pos;
+			TryGenerateChunk(FocusedPlayer.CurrentChunk.ChunkPosition);
 
 			if ((FocusedPlayer.CurrentChunk.IsEntityAt(presm_pos) && FocusedPlayer.CurrentChunk.GetEntityAt(presm_pos).Collision) || FocusedPlayer.CurrentChunk.GetAt(presm_pos).Collision)
 			{
@@ -140,7 +143,7 @@ namespace Postbellum
 			{
 				camera.Position.Y += 24;
 			}
-			FocusedPlayer.Position = presm_pos;
+			
 		}
 		public void AddChunk(Chunk c)
 		{
@@ -159,6 +162,14 @@ namespace Postbellum
 			return gmap[chunk_coords].GetAt(local_coords);
 		}
 
+		public void TryGenerateChunk(Vector2 chunk_coords)
+		{
+			if (!gmap.ContainsKey(chunk_coords))
+			{
+				gmap[chunk_coords] = GenerateChunk(ChunkTypes.Temperate, chunk_coords);
+			}
+		}
+
 		public GridItem GetAtGlobalCoords(Vector2 vec)
 		{
 			return GetAtGlobalCoords((int)vec.X, (int)vec.Y);
@@ -170,6 +181,13 @@ namespace Postbellum
 			if (type == ChunkTypes.Temperate)
 			{
 				target.Fill(tiles["dirt"]);
+				for (int x = 0; x <= Chunk.ChunkSizeX - 1; x++)
+				{
+					for (int y = 0; y <= Chunk.ChunkSizeY - 1; y++)
+					{
+						target.grid[x, y] = new GridItem[] { tiles["dirt"], tiles["grass"] }[new Random().Next(0, 2)];
+					}
+				}
 			}
 			return target;
 		}
